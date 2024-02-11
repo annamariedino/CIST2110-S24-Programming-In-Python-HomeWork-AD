@@ -1,5 +1,5 @@
 # HW2.py
-# Author:
+# Author: Anna-Marie DiNofrio
 
 
 # Question 1:
