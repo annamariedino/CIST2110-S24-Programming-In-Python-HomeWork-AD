@@ -70,104 +70,105 @@ while True:
     if menu_option == "1":
         
 
-while True:
-    name = input("Please enter the name of the contact: ")
-    if name.isalpha():
+        while True:
+            name = input("Please enter the name of the contact: ")
+            if name.isalpha():
+                break
+            else:
+                print("Invalid input. Please enter a name with only letters.")
+        while True:
+            phone = input("Please enter the phone number of the contact: ")
+            if len(phone) == 10 and phone.isdigit():
+                break
+            else:
+                print("Invalid input. Please enter a 10 digit phone number and only numbers.")
+        while True:
+            email = input("Please enter the email address of the contact: ")
+            at_index = email.find("@")
+            period_index = email.find(".")
+            if at_index != -1 and period_index > at_index:
+                break
+            else:
+                print("Invalid input. Please enter a valid email address with @._____ .")
+        while True:
+            birthday = input("Please enter the birthday of the contact (mm/dd/yyyy): ")
+            try:
+                dt.datetime.strptime(birthday, '%m/%d/%Y')
+                break
+            except ValueError:
+                print("Invalid input. Please enter the birthday in the format mm/dd/yyyy.")
+        save_contacts_to_csv(add_contact)
+        pass
+
+
+        elif option == "2":
+        def view_contacts():
+                """This function will display the contacts in the dictionary. The function will take no parameters. The function will return nothing. The function will display a message if there are no contacts in the dictionary. Use string formatting to display the contacts in a table format. The table should have a header row and each contact should be on a separate row. The table should have the following columns: Name, Phone, Email, Birthday. The birthday should be formatted as mm/dd/yyyy. The table should be sorted by name.
+                Returns:
+                    List of contacts
+                """
+        with open("contacts.cvs", "r") as file:
+                reader = csv.reader(file)
+                headers = next(reader)
+                contacts = list(reader)
+                print(tabulate(contacts, headers, tablefmt="pretty"))
+        pass
+        elif option == "3":
+        def delete_contact(name):
+            """This function will delete a contact from the dictionary. The function will take one parameter, the name of the contact to delete. The function will return True if the contact was deleted and False if the contact was not deleted. The function will display an error message if the contact does not exist.
+            Returns:
+                bool: True if the contact was deleted and False if the contact was not deleted
+            """
+        with open("contacts.csv", "r") as file:
+            reader = cvs.reader(file)
+            headers = next(reader)
+            contacts = list(reader)
+
+            contacts = [contact for contact in contacts if contact[0] != name]
+
+            with open("contacts.csv", "w", newline="") as file:
+                writer = csv.writer(file)
+                writer.writerow(headers)
+                writer.writerows(contacts)
+
+            print(f"{name} has been deleted.")
+        name = input("Please enter the name of the contact you would like to delete: ")
+        delete_contact(name)
+        pass
+        elif option == "4":
+        def save_to_csv(contacts):
+            """This function will save the contacts to the csv file. The function will return True if the contacts were saved and False if the contacts were not saved.
+            Returns:
+                Save the contacts to the csv file
+            """
+            with open("contacts.csv", "w", newline="") as file:
+                writer = csv.writer(file)
+                writer.writerow(["Name", "Phone", "Email", "Birthday"])
+                for name, info in contacts.items():
+                    writer.writerow(name, info["Phone"], info["Email"], info["Birthday"].strftime("%m/%d/%Y"))
+        save_to_csv(CONTACTS)
+        pass
+        elif option == "5":
+        def next_birthday():
+            """This function will dispaly when the next upcoming birthday is
+            Returns:
+                Next upcoming birthday
+            """
+            with open("contacts.csv", "r") as file:
+                reader = csv.reader(file)
+                next(reader)
+                birthdays = [datetime.strtime(row[3], "%m/%d/&Y") for row in reader]
+            now = dt.datetime.now()
+            next_birthday = min(birthday for birthday in birthdays if birthday > now)
+
+            print("The next birthdayis on", next_birthday.strftime("%m/%d/%Y"))
+        next_birthday()
+
+        elif option == "0":
+        print("Goodbye")
         break
-    else:
-        print("Invalid input. Please enter a name with only letters.")
-while True:
-    phone = input("Please enter the phone number of the contact: ")
-    if len(phone) == 10 and phone.isdigit():
-        break
-    else:
-        print("Invalid input. Please enter a 10 digit phone number and only numbers.")
-while True:
-    email = input("Please enter the email address of the contact: ")
-    at_index = email.find("@")
-    period_index = email.find(".")
-    if at_index != -1 and period_index > at_index:
-        break
-    else:
-        print("Invalid input. Please enter a valid email address with @._____ .")
-while True:
-    birthday = input("Please enter the birthday of the contact (mm/dd/yyyy): ")
-    try:
-        dt.datetime.strptime(birthday, '%m/%d/%Y')
-        break
-    except ValueError:
-        print("Invalid input. Please enter the birthday in the format mm/dd/yyyy.")
-save_contacts_to_csv(add_contact)
-    pass
-
-
-elif option == "2":
-    def view_contacts():
-        """This function will display the contacts in the dictionary. The function will take no parameters. The function will return nothing. The function will display a message if there are no contacts in the dictionary. Use string formatting to display the contacts in a table format. The table should have a header row and each contact should be on a separate row. The table should have the following columns: Name, Phone, Email, Birthday. The birthday should be formatted as mm/dd/yyyy. The table should be sorted by name.
-        Returns:
-            List of contacts
-        """
-    with open("contacts.cvs", "r") as file:
-        reader = csv.reader(file)
-        headers = next(reader)
-        contacts = list(reader)
-        print(tabulate(contacts, headers, tablefmt="pretty"))
-pass
-elif option == "3":
-def delete_contact(name):
-    """This function will delete a contact from the dictionary. The function will take one parameter, the name of the contact to delete. The function will return True if the contact was deleted and False if the contact was not deleted. The function will display an error message if the contact does not exist.
-    Returns:
-        bool: True if the contact was deleted and False if the contact was not deleted
-    """
-with open("contacts.csv", "r") as file:
-    reader = cvs.reader(file)
-    headers = next(reader)
-    contacts = list(reader)
-
-    contacts = [contact for contact in contacts if contact[0] != name]
-
-    with open("contacts.csv", "w", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerow(headers)
-        writer.writerows(contacts)
-
-    print(f"{name} has been deleted.")
-name = input("Please enter the name of the contact you would like to delete: ")
-delete_contact(name)
-pass
-elif option == "4":
-def save_to_csv(contacts):
-    """This function will save the contacts to the csv file. The function will return True if the contacts were saved and False if the contacts were not saved.
-    Returns:
-        Save the contacts to the csv file
-    """
-    with open("contacts.csv", "w", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerow(["Name", "Phone", "Email", "Birthday"])
-        for name, info in contacts.items():
-            writer.writerow(name, info["Phone"], info["Email"], info["Birthday"].strftime("%m/%d/%Y"))
-save_to_csv(CONTACTS)
-pass
-elif option == "5":
-def next_birthday():
-    """This function will dispaly when the next upcoming birthday is
-    Returns:
-        Next upcoming birthday
-    """
-    with open("contacts.csv", "r") as file:
-        reader = csv.reader(file)
-        next(reader)
-        birthdays = [datetime.strtime(row[3], "%m/%d/&Y") for row in reader]
-    now = dt.datetime.now()
-    next_birthday = min(birthday for birthday in birthdays if birthday > now)
-
-    print("The next birthdayis on", next_birthday.strftime("%m/%d/%Y"))
-next_birthday()
-elif option == "0":
-    print("Goodbye")
-    break
-else:
-    print("Invalid input. Please enter a number between 1 and 4.")
+        else:
+        print("Invalid input. Please enter a number between 1 and 4.")
 
 
 # There is also a contact.csv file that will be used to store the contacts. The csv file will have the following format:
