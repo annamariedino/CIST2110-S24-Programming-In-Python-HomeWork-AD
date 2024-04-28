@@ -9,10 +9,11 @@ from Project3 import Book, User, Library
 #   \ \  \___|\ \  \\  \\ \  \\\  \|\  \\_\  \ \  \_|\ \ \  \____   \ \  \          __\_\  \
 #    \ \__\    \ \__\\ _\\ \_______\ \________\ \_______\ \_______\  \ \__\        |\_______\
 #     \|__|     \|__|\|__|\|_______|\|________|\|_______|\|_______|   \|__|        \|_______|
-# Author:
+# Author: Anna-Marie DiNofrio
 # CIST2110-Project-3 Library Management System (LMS) Test Cases
 # This file should be used in conjunction with a test plan that you create. The file can be csv, markdown, or text. The test plan should be submitted with this file and project3.py.
 
+from Project3 import User, Library, Book
 
 # Test cases for the Book class
 def test_book_creation():
@@ -22,6 +23,7 @@ def test_book_creation():
     assert book.isbn == 1234567890
     assert not book.borrowed
 
+#failed: test_book_creation - AssertionError: assert 'Author Name' == 'Test Book'
 
 def test_book_checkout():
     book = Book("Test Book", "Author Name", 1234567890)
@@ -53,9 +55,12 @@ def test_user_borrow():
 
 
 def test_user_return():
-    ### Implement this test case ###
-    ### Be sure to include this test case in your test plan ###
-    pass  # Remove this line when you implement this test case
+    user = User("John Doe", 1)
+    book = Book("Test Book", "Author Name", 1234567890)
+    user.borrow_book(book)
+    user.return_book(book)
+    assert book not in user.borrowed_books
+    assert not book.borrowed
 
 
 # Test cases for the Library class
@@ -80,8 +85,11 @@ def test_library_find_book():
     found = library.find_book(1234567890)
     assert found == book
 
+#failed: test_library_find_book - assert None == <Project3.Book object at 0x1039e55e0>
 
 def test_library_find_user():
-    ### Implement this test case ###
-    ### Be sure to include this test case in your test plan ###
-    pass  # Remove this line when you implement this test case
+    library = Library()
+    user = User("John Doe", 1)
+    library.add_user(user)
+    found = library.find_user(1)
+    assert found == user
